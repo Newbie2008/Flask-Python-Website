@@ -1,9 +1,15 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-# Starting up the Flask server
+db = SQLAlchemy()
+DB_NAME = 'database.db'
+
+# Starting up the Flask server and making the database
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'HelloWorld'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    db.init_app(app)
     
     from views import views
     from auth import auth
